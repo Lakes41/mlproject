@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from src.exception import CustomException
 from src.logger import logging
 from sklearn.model_selection import train_test_split
+from src.components.data_transformation import DataTransformation
 
 
 @dataclass
@@ -55,7 +56,10 @@ class DataIngestion:
 if __name__ == "__main__":
     try:
         obj = DataIngestion()
-        obj.initiate_data_ingestion("notebook/data/stud.csv")
-    except Exception:
+        train_data_path, test_data_path = obj.initiate_data_ingestion()
+        
+        data_transformer = DataTransformation()
+        data_transformer.initiate_data_transformation(train_data_path, test_data_path)
+    except Exception as e:
         logging.exception("Data ingestion failed at entry point")
-        raise
+        raise CustomException(e, sys)
