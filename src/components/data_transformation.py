@@ -70,9 +70,9 @@ class DataTransformation:
             # Split features and target variable
             feature_train_df = train_df.drop(columns=[target_column_name], axis=1)
             target_train_df = train_df[target_column_name]
-            
             feature_test_df = test_df.drop(columns=[target_column_name], axis=1)
             target_test_df = test_df[target_column_name]
+            logging.info(f"Features include {feature_train_df.columns}")
             
             # Apply transformations
             logging.info("Applying preprocessing object on training and testing data.")

@@ -6,6 +6,7 @@ from src.exception import CustomException
 from src.logger import logging
 from sklearn.model_selection import train_test_split
 from src.components.data_transformation import DataTransformation
+from src.components.model_trainer import ModelTrainer
 
 
 @dataclass
@@ -59,7 +60,9 @@ if __name__ == "__main__":
         train_data_path, test_data_path = obj.initiate_data_ingestion()
         
         data_transformer = DataTransformation()
-        data_transformer.initiate_data_transformation(train_data_path, test_data_path)
+        train_arr, test_arr,_ = data_transformer.initiate_data_transformation(train_data_path, test_data_path)
+        modeltrainer = ModelTrainer()
+        print(modeltrainer.initiate_model_trainer(train_arr, test_arr))
     except Exception as e:
-        logging.exception("Data ingestion failed at entry point")
+        logging.info("Error in main execution")
         raise CustomException(e, sys)
